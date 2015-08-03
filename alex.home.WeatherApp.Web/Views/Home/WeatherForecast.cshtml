@@ -1,0 +1,64 @@
+﻿@model alex.home.WeatherApp.Shared.WeatherForecast
+
+@{
+    ViewBag.Title = "Weather App Demo";
+}
+
+<div class="row">
+    <h2>Weather App Demo</h2>
+</div>
+<div class="row">
+    <div class="col-sm-1">
+        <img src="~/Images/weather.jpg" alt="Weather Icon" />
+    </div>
+    <div class="col-sm-4">
+        <div class="row">
+            @if (string.IsNullOrWhiteSpace(Model.Location))
+            {
+                <text>Please specify a geographical location.</text>
+            }
+        </div>
+        <div class="row">
+            @using (Html.BeginForm("WeatherForecast", "Home", Model))
+            {
+                <label for="Location">Location:</label>
+                @Html.TextBox("Location", Model.Location)                
+                <br/>
+
+                <label for="TemperatureUnit">Temperature Unit:</label>
+                @Html.RadioButtonFor(m => m.TemperatureUnit, "Celsius")<span>&deg;C</span>
+                @Html.RadioButtonFor(m => m.TemperatureUnit, "Fahrenheit")<span>&deg;F</span>
+
+                <br />
+                <label for="WindSpeedUnit">Wind SpeedUnit Unit:</label>
+                @Html.RadioButtonFor(m => m.WindSpeedUnit, "Kph")<span>Km/h</span>
+                @Html.RadioButtonFor(m => m.WindSpeedUnit, "Mph")<span>MPH</span>
+
+                <br />
+                <input type="submit" value="Get Forecast" />
+        }
+    </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-offset-1 col-sm-3">
+        @if (!string.IsNullOrWhiteSpace(Model.Location))
+        {
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Temperature:</td>
+                        <td>@String.Format("{0:0}", Model.AverageTemperature)</td>
+                        
+                        <td>@Html.Display("TemperatureUnit", Model.TemperatureUnit)</td>
+                    </tr>
+                    <tr>
+                        <td>Wind Speed:</td>
+                        <td>@String.Format("{0:0.#}", Model.AverageWindSpeed)</td>
+                        <td>@Html.Display("WindSpeedUnit", Model.WindSpeedUnit)</td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

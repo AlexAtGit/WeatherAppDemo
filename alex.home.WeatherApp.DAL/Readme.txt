@@ -1,0 +1,1 @@
+﻿This project will house any future entity framework code generated.
